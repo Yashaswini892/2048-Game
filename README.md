@@ -16,7 +16,3 @@ Basically, 2048 presents with with a 4×4 grid. When you start the game, there w
 
 - HTML5, CSS3, flask and Python
 - Code editor - Visual Studio Code ( https://code.visualstudio.com/ )
-
-### Working Demo Link
-
-https://game2048-group-42.herokuapp.com/
