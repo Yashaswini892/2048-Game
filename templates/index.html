@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+	<title>2048 Game</title>
+	{% if autoplay%}
+        <meta http-equiv = "refresh" content = "1; url = /autoplay/{{ suggested_move }}/{{ grid_encoding }}/{{ score }}/" />
+    {% endif %}
+	<style>
+		#main { 
+			position: absolute; 
+			width: 490px; 
+			height: 490px; 
+			background-color: #807979; 
+			left: 50%;
+			top: 50%;
+			margin-left: -245px;
+			margin-top: -245px;
+			}
+		#row { 
+			position: relative; 
+			width: 100%; 
+			height: 110px; 
+			font-size: 24px; 
+			text-align: center; 
+			left: 0px;
+			top: 0px;
+			margin-top: 10px;
+			}
+			#field { 
+			position: absolute; 
+			width: 110px; 
+			height: 110px;
+			font-size: 24px; 
+			text-align: center; 
+			left: 0px;
+			top: 0px;
+			margin-left: 10px;
+			}
+			#fieldnumber { 
+			position: absolute; 
+			width: 110px; 
+			height: 30px;
+			font-size: 30px; 
+			text-align: center; 
+			left: 0px;
+			top: 50%;
+			margin-top: -15px;
+			}
+		#up { 
+			position: absolute; 
+			width: 100px; 
+			height: 30px;
+			font-size: 30px; 
+			border-radius: 100%;
+			text-align: center; 
+			left: 50%;
+			top: 50%;
+			margin-left: -50px;
+			margin-top: -318px;
+		}
+		#down { 
+			position: absolute; 
+			width: 100px; 
+			height: 30px;
+			border-radius: 100%;
+			font-size: 30px; 
+			text-align: center; 
+			left: 50%;
+			top: 50%;
+			margin-left: -50px;
+			margin-top: 250px;
+		}
+			#right { 
+				position: absolute; 
+				width: 100px; 
+				height: 30px;
+				font-size: 30px; 
+				border-radius: 100%;
+				text-align: center; 
+				left: 50%;
+				top: 50%;
+				margin-left: 280px;
+				margin-top: 0px;
+			}
+			#left { 
+				position: absolute; 
+				border-radius: 100%;
+				width: 100px; 
+				height: 30px;
+				font-size: 30px; 
+				text-align: center; 
+				left: 50%;
+				top: 50%;
+				margin-left: -370px;
+				margin-top: 0px;
+			}
+			#game_over { 
+				position: absolute; 
+				width: 360px; 
+				height: 60px;
+				font-size: 50px; 
+				background-color:lightgray;
+				text-align: center; 
+				left: 50%;
+				top: 50%;
+				margin-left: -180px;
+				margin-top: -30px;
+			}
+			.box{
+				display:block;
+				position: absolute;
+				left: 2%;
+				margin-top: 40px;
+				height: 200px;
+				width: 160px;
+			}
+			.score { 
+				position: absolute;
+				display:block;
+				width: 130px;
+				height: 40px;
+				margin-left: 0px;
+				margin-right: 10px;
+				margin-bottom: 0px;
+				text-decoration:none;
+				text-align:center;
+				padding:10px 5px 5px 5px;
+				font-size:  25px;
+				color: whitesmoke;
+				background-color:#e99852;
+				border: 7px solid #807979;
+				border-radius: 3px;
+			}
+			.play_again {
+				position: absolute;
+				width: 130px;
+				height: 40px;
+				margin-left: 0px;
+				margin-top: 70px;
+				margin-right: 10px;
+				margin: top 50px;
+				text-decoration:none;
+				text-align:center;
+				padding: 10px 5px 5px 5px;
+				font-size:  25px;
+				color: whitesmoke;
+				background-color:#e99852;
+				border: 7px solid #807979;
+				border-radius: 3px;
+			}
+			.suggested_move { 
+				position: absolute; 
+				width: 130px; 
+				height: 50px;
+				margin-left: 0px;
+				margin-top: 140px;
+				margin-right: 10px;
+				font-size: 25px; 
+				text-align: center; 
+				padding: 10px 5px 5px 5px;
+				color: whitesmoke;
+				background-color: #e99852;
+				border: 7px solid #807979;
+				border-radius: 3px;
+			}
+			.autoplay {
+				position: absolute;
+				width: 130px;
+				height: 40px;
+				margin-left: 0px;
+				margin-top: 70px;
+				margin-right: 10px;
+				margin-top:  220px;
+				text-decoration:none;
+				text-align:center;
+				padding: 10px 5px 5px 5px;
+				font-size:  25px;
+				color: whitesmoke;
+				background-color:#e99852;
+				border: 7px solid #807979;
+				border-radius: 3px;
+			}
+			.replay{
+				text-decoration: none;
+			}
+			
+			.iconify {
+				width: 75px;
+				height: 75px;
+				color: darkslategrey;
+			}
+			.iconify:hover{
+				background-color:cadetblue;
+				border-radius: 100%;
+				color:#d8d4ce;
+				transition:ease-in-out 1s;
+			}
+			.c {
+			background-color: #9a9ba7; 
+			}
+			.c2 {
+			background-color: #efe4db;
+			}
+			.c4 {
+			background-color: #eedfc9;
+			}
+			.c8 {
+			background-color: #f2b179;
+			}
+			.c16 {
+			background-color: #ec8d55;
+			}
+			.c32 {
+			background-color: #f77c60;
+			}
+			.c64 {
+			background-color: #eb5939;
+			}
+			.c128 {
+			background-color: #f2d04b;
+			}
+			.c256 {
+			background-color: #f2d04b;
+			}
+			.c512 {
+			background-color: #e3ba12;
+			}
+			.c1024 {
+			background-color: #e3ba12;
+			}
+			.c2048 {
+			background-color: #ecc500;
+			}
+			.c4096 {
+			background-color: #61d994;
+			}
+			.a{
+				text-decoration: none;
+			}
+	</style>
+</head>
+    <body style="background-color:#d8d4ce">
+		<div id="main">
+			<div id="row">
+				<div id="field" class="c{{ row1col1 }}">
+					<div id="fieldnumber">{{ row1col1}}</div>
+				</div>
+				<div id="field" class="c{{ row1col2 }}" style="left: 120px">
+					<div id="fieldnumber">{{ row1col2 }}</div>
+				</div>
+				<div id="field" class="c{{ row1col3 }}" style="left: 240px">
+					<div id="fieldnumber">{{ row1col3 }}</div>
+				</div>
+				<div id="field" class="c{{ row1col4 }}" style="left: 360px">
+					<div id="fieldnumber">{{ row1col4 }}</div>
+				</div>
+			</div>
+
+			<div id="row">
+				<div id="field" class="c{{ row2col1 }}">
+					<div id="fieldnumber">{{ row2col1 }}</div>
+				</div>
+				<div id="field" class="c{{ row2col2 }}" style="left: 120px">
+					<div id="fieldnumber">{{ row2col2 }}</div>
+				</div>
+				<div id="field" class="c{{ row2col3 }}" style="left: 240px">
+					<div id="fieldnumber">{{ row2col3 }}</div>
+				</div>
+				<div id="field" class="c{{ row2col4 }}" style="left: 360px">
+					<div id="fieldnumber">{{ row2col4 }}</div>
+				</div>
+			</div>
+
+			<div id="row">
+				<div id="field" class="c{{ row3col1 }}">
+					<div id="fieldnumber">{{ row3col1 }}</div>
+				</div>
+				<div id="field" class="c{{ row3col2 }}" style="left: 120px">
+					<div id="fieldnumber">{{ row3col2 }}</div>
+				</div>
+				<div id="field" class="c{{ row3col3 }}" style="left: 240px">
+					<div id="fieldnumber">{{ row3col3 }}</div>
+				</div>
+				<div id="field" class="c{{ row3col4 }}" style="left: 360px">
+					<div id="fieldnumber">{{ row3col4 }}</div>
+				</div>
+			</div>
+
+			<div id="row">
+				<div id="field" class="c{{ row4col1 }}">
+					<div id="fieldnumber">{{ row4col1 }}</div>
+				</div>
+				<div id="field" class="c{{ row4col2 }}" style="left: 120px">
+					<div id="fieldnumber">{{ row4col2 }}</div>
+				</div>
+				<div id="field" class="c{{ row4col3 }}" style="left: 240px">
+					<div id="fieldnumber">{{ row4col3 }}</div>
+				</div>
+				<div id="field" class="c{{ row4col4 }}" style="left: 360px">
+					<div id="fieldnumber">{{ row4col4 }}</div>
+				</div>
+			</div>
+		</div>
+        {% if not game_over %}
+			<div id="up"><a href="/move/up/{{ grid_encoding }}/{{ score}}/"><span class="iconify" data-icon="icons8:arrows-long-up"></span></a></div>
+			<div id="right"><a href="/move/right/{{ grid_encoding }}/{{ score}}/"><span class="iconify" data-icon="icons8:arrows-long-right"></span></a></div>
+			<div id="down"><a href="/move/down/{{ grid_encoding }}/{{ score}}/"><span class="iconify" data-icon="icons8:arrows-long-down"></span></a></div>
+			<div id="left"><a href="/move/left/{{ grid_encoding }}/{{ score}}/"><span class="iconify" data-icon="icons8:arrows-long-left"></span></a></div>
+			
+		</div>
+		{% else %}
+		    <div id="game_over">Game Over!</div>
+		{% endif %}
+
+		<div class="box">
+			<div class="play_again"> <a class="replay" href="/">Play Again</a> </div>
+			<div class="score">Score: {{ score }}</div> 
+			<div class="suggested_move">Suggested Move: <a style="text-decoration:none" href="/move/{{ suggested_move }}/{{ grid_encoding }}/{{ score }}/">{{ suggested_move }}</a></div>
+			<div class="autoplay"><a style="text-decoration:none" href="/autoplay/{{ suggested_move }}/{{ grid_encoding }}/{{ score }}/">Autoplay</a></div>
+		</div>
+    </body>
+	<script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+</html>
